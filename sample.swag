@@ -1,0 +1,14 @@
+  str = "derp";
+   int = 43 +  12;
+chr =  "k";
+
+print(str);
+print  (  "herp" + "cherp");
+print   (int  );
+print(420 - 83 + int);
+print(chr);
+print("j");
+
+int  = 12  ;
+print (   int
+ )  ;
