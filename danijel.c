@@ -82,14 +82,19 @@ var_t make_int(int i, char* name)
 	var_t temp;
 	temp.any.i = i;
 	temp.tag = INT;
+	temp.name = malloc(strlen(name) + 1);
+	strcat(temp.name, name);
 	return temp;
 }
 
 var_t make_string(char* s, char* name)
 {
 	var_t temp;
+	temp.any.s = malloc(strlen(s) + 1);
 	strcat(temp.any.s, s);
 	temp.tag = STRING;
+	temp.name = malloc(strlen(name) + 1);
+	strcat(temp.name, name);
 	return temp;
 }
 
