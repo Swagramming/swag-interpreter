@@ -47,6 +47,12 @@ char* readfile(const char* filename)
     return ptr;
 }
 
+int isqmark(int c)
+{
+	if ((char)c == '"') return 0;
+	else return 1;
+}
+
 char* readtoken(char** line, int (*func)(int), int skip)
 {
     if (skip == 0) while (isspace(**line) != 0) ++(*line);
@@ -76,6 +82,7 @@ void interpretfunc(char* name, char* line)
 
 void interpretvar(char* name, char* line)
 {
+	
 }
 
 var_t make_int(int i, char* name)
@@ -170,7 +177,7 @@ var_t interpretexp(char** line)
     if (**line == '"') 
     {
         ++(*line);
-        exp.any.s = readtoken(line, isprint, 1);
+        exp.any.s = readtoken(line, isqmark, 1);
         exp.tag = STRING;
     }
     else if (isdigit(**line))
@@ -183,7 +190,7 @@ var_t interpretexp(char** line)
     else if (isalpha(**line))
     {
         char* id = readtoken(line, isalpha, 0);
-        /*exp = find_var(*/
+        exp = *find_var(id);
         free(id);
     }
     else
