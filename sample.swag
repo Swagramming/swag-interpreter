@@ -10,5 +10,5 @@ print(chr);
 print("j");
 
 int  = 12  ;
-print (   int
+print (   int 
  )  ;

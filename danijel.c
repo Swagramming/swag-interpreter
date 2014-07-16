@@ -26,7 +26,9 @@ typedef struct
 var_t* var_reg = NULL;
 int reg_size = 0;
 
-var_t interpretexp(char** line);
+var_t interpretexp(char** line)
+{
+}
 
 int filesize(FILE* file)
 {
@@ -51,11 +53,11 @@ char* readtoken(char** line, int (*func)(int), int skip)
 {
     if (skip == 0) while (isspace(**line) != 0) ++(*line);
     char* temp1 = *line, *temp2;
-    while (func(**line) != 0 && **line != '\0') ++(*line);
+    while (func(**line) != 0 && **line != '\0') (*line)++;
     temp2 = malloc((*line - temp1 + 1) * sizeof(char));
     strncpy(temp2, temp1, *line - temp1);
     temp2[*line - temp1] = '\0';
-    while (isspace(**line) != 0) ++(*line);
+    if (skip == 0) while (isspace(**line) != 0) ++(*line);
     return temp2;
 }
 
@@ -71,6 +73,7 @@ void interpretfunc(char* name, char* line)
             default: puts("unsupported type for func print"); abort();
         }
     }
+    else puts("function %s does not exist", name);
 }
 
 void interpretvar(char* name, char* line)
@@ -202,11 +205,14 @@ void interpretline(char* line)
     do
     {
         name = readtoken(&line, isalpha, 0);
+        printf(">%s<\n", name);
         switch (*line)
         {
             case '(': interpretfunc(name, ++line); break;
             case '=': interpretvar(name, ++line); break;
-            default: printf("compile error at: %s", line); abort();
+            default: printf("compile error at: %s\n", line);
+					 puts(name);
+					 abort();
         }
         /*free(name);*/
     } while (*line != '\0');
