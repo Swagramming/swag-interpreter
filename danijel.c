@@ -26,9 +26,7 @@ typedef struct
 var_t* var_reg = NULL;
 int reg_size = 0;
 
-var_t interpretexp(char** line)
-{
-}
+var_t interpretexp(char** line);
 
 int filesize(FILE* file)
 {
@@ -73,7 +71,7 @@ void interpretfunc(char* name, char* line)
             default: puts("unsupported type for func print"); abort();
         }
     }
-    else puts("function %s does not exist", name);
+    else printf("function %s does not exist", name);
 }
 
 void interpretvar(char* name, char* line)
@@ -211,7 +209,6 @@ void interpretline(char* line)
             case '(': interpretfunc(name, ++line); break;
             case '=': interpretvar(name, ++line); break;
             default: printf("compile error at: %s\n", line);
-					 puts(name);
 					 abort();
         }
         /*free(name);*/
